@@ -34,7 +34,7 @@ SORT_BY = ["product", "the_type", "process_size", "transistors", "tdp", "frequen
 @app.route("/")
 def hello_world():
     name = request.args.get("name", "World")
-    return f"<p>Hello, {name}!</p>"
+    return f"<p>Hello, {name}!</p> <button type='button' onclick='window.location.href=\"http://127.0.0.1:5000/chips\";'>Go to Search</button>"
 
 
 @app.route("/chips")

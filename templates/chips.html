@@ -61,7 +61,7 @@
             font-weight: bold;
             text-align: center;
             transition: 200ms;
-            width: 4%;
+            width: 30px;
             margin: 4px;
             box-sizing: border-box;
             border: 0;
@@ -254,8 +254,10 @@
                     <input type="hidden" name="transistors" value="{{params.transistors}}">
                     <input type="hidden" name="frequency" value="{{params.frequency}}">
                     <input type="hidden" name="vendor" value="{{params.vendor}}">
+                    <input type="hidden" name="results_per_page" value="{{params.results_per_page}}">
                     Page:  
-                    <select name="page"> 
+                    <select name="page">
+                        <option value ="{{params.page}}">{{params.page}}</option> 
                         {% for page_num in range(1, total_pages+1) %}
                         <option {% if page_num==params.page %} selected {% endif %}> {{page_num}} </option>
                         {% endfor %}
