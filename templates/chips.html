@@ -1,0 +1,275 @@
+<html>
+
+<head>
+    <title>PC Part Picker</title>
+    <style>
+        .title {
+            color: #009879;
+            text-align: center;
+        }
+    </style>
+
+    <h1 class="title" style="font-family: sans-serif;">PC PART PICKER</h1>
+    <style>
+
+        form>label {
+            display: flex;
+            margin-right: 5px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form>label>span {
+            font-size: small;
+            display: center;
+            width: 90px;
+            margin: 4px;
+            align-items: center;
+            font-family: sans-serif;
+            font-weight: 500;
+            text-align: center;
+            padding: 5px;
+        }
+
+        tr>th {
+            text-align: left;
+        }
+        
+        .search {
+            background-color: #009879;
+            border-radius: 12px;
+            color: #000;
+            display: block;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            transition: 200ms;
+            width: 25%;
+            margin: 0 auto;
+            box-sizing: border-box;
+            font-size: 16px;
+            user-select: none;
+            border: 0;
+            padding: 8px;
+        }
+
+        .page {
+            background-color: #009879;
+            border-radius: 12px;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            transition: 200ms;
+            width: 4%;
+            margin: 4px;
+            box-sizing: border-box;
+            border: 0;
+            font-size: 0.9em;
+            user-select: none;
+        }
+
+        .styled-table {
+            width: 100%;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.04)
+            
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879
+        }
+
+        .results {
+            font-family: sans-serif;
+            font-size: small;
+            font-weight: 500;
+            
+        }
+
+
+    </style>
+</head>
+
+
+<body>
+    <form action="chips" method="get">
+        <label>
+            <span>Product Name:</span>
+            <input type="text" name=product value="{{params['product']}}">
+        </label>
+        <label>
+            <span>Type:</span>
+            <input type="text" name=the_type value="{{params['the_type']}}">
+        </label>
+        <label>
+            <span>Vendor:</span>
+            <input type="text" name=vendor value="{{params['vendor']}}">
+        </label>
+        <label for="results_per_page">
+            <span>Results per Page:</span>
+            <select name="results_per_page" id="results_per_page">
+            <option value="10" {% if params.results_per_page == "10" %} selected {% endif %}>10</option>
+            <option value="50" {% if params.results_per_page == "50" %} selected {% endif %}>50</option>
+            <option value="100" {% if params.results_per_page == "100" %} selected {% endif %}>100</option>
+            </select>
+        </label>
+        <input type="hidden" name="sort_by" value="product">
+        <input type="hidden" name="sort_dir" value="asc">
+        <button class="search" type="submit">Search</button>
+    </form>
+
+    {% if result_count > 0 %} 
+    <p1 class="results">About {{result_count}} results</p1>
+
+<table class="styled-table">
+    <tr>
+        <th>
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=product&sort_dir={{get_sort_dir('product')}}">Product Name</a>
+            {% if params.sort_by == 'product' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %} 
+        </th>
+        <th>
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=the_type&sort_dir={{get_sort_dir('the_type')}}">Type</a>
+            {% if params.sort_by == 'the_type' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %} 
+        </th>
+        <th>
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=release_date&sort_dir={{get_sort_dir('release_date')}}">Release Date</a>
+            {% if params.sort_by == 'release_date' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %}
+        </th>
+        <th>
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=process_size&sort_dir={{get_sort_dir('process_size')}}">Process Size</a>
+            {% if params.sort_by == 'process_size' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %}
+        </th>
+        <th>            
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=tdp&sort_dir={{get_sort_dir('tdp')}}">TDP (Wattage)</a>
+            {% if params.sort_by == 'tdp' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %} 
+        </th>
+        <th>            
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=transistors&sort_dir={{get_sort_dir('transistors')}}">Transistors</a>
+            {% if params.sort_by == 'transistors' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %} 
+        </th>
+        <th>            
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=frequency&sort_dir={{get_sort_dir('frequency')}}">Frequency</a>
+            {% if params.sort_by == 'frequency' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %} 
+        </th>
+        <th>            
+            <a href="chips?product={{params.product}}&the_type={{params.the_type}}&release_date={{params.release_date}}&process_size={{params.process_size}}&tdp={{params.tdp}}&transistors={{params.transistors}}&frequency={{params.frequency}}&vendor={{params.vendor}}&sort_by=vendor&sort_dir={{get_sort_dir('vendor')}}">Vendor</a>
+            {% if params.sort_by == 'vendor' %}
+            {% if params.sort_dir == 'asc' %}
+            ↑
+            {% else %}
+            ↓
+            {% endif %}
+            {% endif %} 
+        </th>
+    </tr>
+    {% for chip in chips %}
+    <tr class="active-row">
+        <td>{{chip.product}}</td>
+        <td>{{chip.the_type}}</td>
+        <td>{{chip.release_date}}</td>
+        <td>{{chip.process_size}}</td>
+        <td>{{chip.tdp}}</td>
+        <td>{{chip.transistors}}</td>
+        <td>{{chip.frequency}}</td>
+        <td>{{chip.vendor}}</td>
+    </tr>
+    {% endfor %}
+    <tfoot>
+        <tr>
+            <td colspan="2">
+                <form action="chips" method="get">
+                    <input type="hidden" name="product" value="{{params.product}}">
+                    <input type="hidden" name="the_type" value="{{params.the_type}}">
+                    <input type="hidden" name="release_date" value="{{params.release_date}}">
+                    <input type="hidden" name="process_size" value="{{params.process_size}}">
+                    <input type="hidden" name="tdp" value="{{params.tdp}}">
+                    <input type="hidden" name="transistors" value="{{params.transistors}}">
+                    <input type="hidden" name="frequency" value="{{params.frequency}}">
+                    <input type="hidden" name="vendor" value="{{params.vendor}}">
+                    Page:  
+                    <select name="page"> 
+                        {% for page_num in range(1, total_pages+1) %}
+                        <option {% if page_num==params.page %} selected {% endif %}> {{page_num}} </option>
+                        {% endfor %}
+                    </select>
+                    <button class="page" type="submit">Go</button>
+                </form>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+    {% else %}
+    <h1 style="font-family: sans-serif;">No Results</h1>
+    {% endif %}
+
+</body>
